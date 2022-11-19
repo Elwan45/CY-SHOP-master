@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Image">
+        <table name="image" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="idimg">
+                <column name="idimg"/>
+            </id>
+            <basic name="url">
+                <column name="url"/>
+            </basic>
+            <basic name="isprincipal">
+                <column name="isprincipal"/>
+            </basic>
+            <basic name="idp">
+                <column name="idp"/>
+            </basic>
+            <many-to-one name="produitByIdp" optional="true" target-entity="com.ecommerce.metier.Produit">
+                <join-column name="idp" nullable="false" referenced-column-name="idP"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

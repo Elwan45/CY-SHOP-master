@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Compte">
+        <table name="compte" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="login">
+                <column name="login"/>
+            </id>
+            <basic name="mdp">
+                <column name="mdp"/>
+            </basic>
+            <basic name="role">
+                <column name="role"/>
+            </basic>
+            <basic name="question">
+                <column name="question"/>
+            </basic>
+            <basic name="reponse">
+                <column name="reponse"/>
+            </basic>
+            <basic name="dateCreation">
+                <column name="date_creation"/>
+            </basic>
+            <one-to-many name="clientsByLogin" mapped-by="compteByLogin" target-entity="com.ecommerce.metier.Client"/>
+        </attributes>
+    </entity>
+</entity-mappings>

@@ -1,0 +1,67 @@
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd" version="4.0">
+    <welcome-file-list>
+        <welcome-file>index.jsp</welcome-file>
+    </welcome-file-list>
+    <servlet>
+        <servlet-name>AddProduit</servlet-name>
+        <servlet-class>com.ecommerce.controller.AddProduit</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>AddProduit</servlet-name>
+        <url-pattern>/AddProduit</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Checkout</servlet-name>
+        <servlet-class>com.ecommerce.controller.Checkout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Checkout</servlet-name>
+        <url-pattern>/Checkout</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>GererPanier</servlet-name>
+        <servlet-class>com.ecommerce.controller.GererPanier</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>GererPanier</servlet-name>
+        <url-pattern>/GererPanier</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Inscription</servlet-name>
+        <servlet-class>com.ecommerce.controller.Inscription</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Inscription</servlet-name>
+        <url-pattern>/Inscription</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Login</servlet-name>
+        <servlet-class>com.ecommerce.controller.Login</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Login</servlet-name>
+        <url-pattern>/Login</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Logout</servlet-name>
+        <servlet-class>com.ecommerce.controller.Logout</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Logout</servlet-name>
+        <url-pattern>/Logout</url-pattern>
+        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>Paiement</servlet-name>
+        <servlet-class>com.ecommerce.controller.Paiement</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>Paiement</servlet-name>
+        <url-pattern>/Paiement</url-pattern>
+    </servlet-mapping>
+</web-app>

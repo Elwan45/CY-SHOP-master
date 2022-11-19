@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Client">
+        <table name="client" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="idc">
+                <column name="idc"/>
+            </id>
+            <basic name="nom">
+                <column name="nom"/>
+            </basic>
+            <basic name="prenom">
+                <column name="prenom"/>
+            </basic>
+            <basic name="email">
+                <column name="email"/>
+            </basic>
+            <basic name="tel">
+                <column name="tel"/>
+            </basic>
+            <basic name="regDate">
+                <column name="regDate"/>
+            </basic>
+            <basic name="login">
+                <column name="login"/>
+            </basic>
+            <many-to-one name="compteByLogin" optional="true" target-entity="com.ecommerce.metier.Compte">
+                <join-column name="login" nullable="false" referenced-column-name="login"/>
+            </many-to-one>
+            <one-to-many name="adressesByIdc" mapped-by="clientByIdc" target-entity="com.ecommerce.metier.Adresse"/>
+            <one-to-many name="commandesByIdc" mapped-by="clientByIdc" target-entity="com.ecommerce.metier.Commande"/>
+            <one-to-many name="wishlistsByIdc" mapped-by="clientByIdc" target-entity="com.ecommerce.metier.Wishlist"/>
+        </attributes>
+    </entity>
+</entity-mappings>

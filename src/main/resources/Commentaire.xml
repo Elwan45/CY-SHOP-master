@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Commentaire">
+        <table name="commentaire" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="idComm">
+                <column name="idComm"/>
+            </id>
+            <basic name="idP">
+                <column name="idP"/>
+            </basic>
+            <basic name="idcmd">
+                <column name="idcmd"/>
+            </basic>
+            <basic name="commentaire">
+                <column name="commentaire"/>
+            </basic>
+            <basic name="datePub">
+                <column name="date_pub"/>
+            </basic>
+            <many-to-one name="produitByIdP" optional="true" target-entity="com.ecommerce.metier.Produit">
+                <join-column name="idP" nullable="false" referenced-column-name="idP"/>
+            </many-to-one>
+            <many-to-one name="commandeByIdcmd" optional="true" target-entity="com.ecommerce.metier.Commande">
+                <join-column name="idcmd" nullable="false" referenced-column-name="idcmd"/>
+            </many-to-one>
+        </attributes>
+    </entity>
+</entity-mappings>

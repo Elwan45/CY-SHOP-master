@@ -1,0 +1,34 @@
+<persistence xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd" version="2.2">
+    <persistence-unit name="default">
+        <mapping-file>Adresse.xml</mapping-file>
+        <mapping-file>Categorie.xml</mapping-file>
+        <mapping-file>Client.xml</mapping-file>
+        <mapping-file>Commande.xml</mapping-file>
+        <mapping-file>Commentaire.xml</mapping-file>
+        <mapping-file>Compte.xml</mapping-file>
+        <mapping-file>Image.xml</mapping-file>
+        <mapping-file>Lignecommande.xml</mapping-file>
+        <mapping-file>Produit.xml</mapping-file>
+        <mapping-file>Carte.xml</mapping-file>
+        <mapping-file>Bloque.xml</mapping-file>
+        <class>com.ecommerce.metier.Adresse</class>
+        <class>com.ecommerce.metier.Categorie</class>
+        <class>com.ecommerce.metier.Client</class>
+        <class>com.ecommerce.metier.Commande</class>
+        <class>com.ecommerce.metier.Commentaire</class>
+        <class>com.ecommerce.metier.Compte</class>
+        <class>com.ecommerce.metier.Image</class>
+        <class>com.ecommerce.metier.Lignecommande</class>
+        <class>com.ecommerce.metier.Produit</class>
+
+        <class>com.ecommerce.metier.Carte</class>
+        <class>com.ecommerce.metier.Bloque</class>
+        <properties>
+            <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/projet_jee"/>
+            <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>
+            <property name="hibernate.connection.username" value="root"/>
+            <property name="hibernate.connection.password" value="xC4T5h29"/>
+            <property name="hibernate.show_sql" value="true"/>
+        </properties>
+    </persistence-unit>
+</persistence>

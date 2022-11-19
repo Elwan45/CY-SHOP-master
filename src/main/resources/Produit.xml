@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Produit">
+        <table name="produit" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="idP">
+                <column name="idP"/>
+            </id>
+            <basic name="idcat">
+                <column name="idcat"/>
+            </basic>
+            <basic name="libelle">
+                <column name="libelle"/>
+            </basic>
+            <basic name="marque">
+                <column name="Marque"/>
+            </basic>
+            <basic name="prix">
+                <column name="prix"/>
+            </basic>
+            <basic name="description">
+                <column name="Description"/>
+            </basic>
+            <basic name="fraisExpedition">
+                <column name="fraisExpedition"/>
+            </basic>
+            <basic name="disponibilite">
+                <column name="disponibilite"/>
+            </basic>
+            <basic name="qtestck">
+                <column name="qtestck"/>
+            </basic>
+            <basic name="datePub">
+                <column name="date_pub"/>
+            </basic>
+            <many-to-one name="categorieByIdcat" optional="true" target-entity="com.ecommerce.metier.Categorie">
+                <join-column name="idcat" nullable="false" referenced-column-name="idcat"/>
+            </many-to-one>
+            <one-to-many name="commentairesByIdP" mapped-by="produitByIdP"
+                         target-entity="com.ecommerce.metier.Commentaire"/>
+            <one-to-many name="imagesByIdP" mapped-by="produitByIdp" target-entity="com.ecommerce.metier.Image"/>
+            <one-to-many name="itemwishlistsByIdP" mapped-by="produitByIdp"
+                         target-entity="com.ecommerce.metier.Itemwishlist"/>
+            <one-to-many name="lignecommandesByIdP" mapped-by="produitByIdp"
+                         target-entity="com.ecommerce.metier.Lignecommande"/>
+        </attributes>
+    </entity>
+</entity-mappings>

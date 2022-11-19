@@ -1,0 +1,19 @@
+<hibernate-configuration>
+  <session-factory name="">
+    <property name="hibernate.connection.driver_class">com.mysql.jdbc.Driver</property>
+    <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/projet_jee</property>
+    <property name="hibernate.connection.username">root</property>
+    <property name="hibernate.connection.password">xC4T5h29</property>
+    <property name="hibernate.dialect">org.hibernate.dialect.MySQLDialect</property>
+    <mapping class="com.ecommerce.metier.Produit" resource="Produit.xml"/>
+    <mapping class="com.ecommerce.metier.Categorie" resource="Categorie.xml"/>
+    <mapping class="com.ecommerce.metier.Commande" resource="Commande.xml"/>
+    <mapping class="com.ecommerce.metier.Client" resource="Client.xml"/>
+    <mapping class="com.ecommerce.metier.Lignecommande" resource="Lignecommande.xml"/>
+    <mapping class="com.ecommerce.metier.Adresse" resource="Adresse.xml"/>
+    <mapping class="com.ecommerce.metier.Compte" resource="Compte.xml"/>
+    <mapping class="com.ecommerce.metier.Image" resource="Image.xml"/>
+    <mapping class="com.ecommerce.metier.Commentaire" resource="Commentaire.xml"/>
+    <mapping class="com.ecommerce.metier.Carte" resource="Carte.xml"/>
+  </session-factory>
+</hibernate-configuration>

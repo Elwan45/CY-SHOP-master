@@ -1,0 +1,14 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="CY-SHOP:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <properties id="maven-jee-properties">
+      <options>
+        <module>CY-SHOP</module>
+        <packaging>war</packaging>
+      </options>
+    </properties>
+    <root id="archive" name="CY-SHOP-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="CY-SHOP:war exploded" />
+    </root>
+  </artifact>
+</component>

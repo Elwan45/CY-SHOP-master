@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<entity-mappings xmlns="https://jakarta.ee/xml/ns/persistence/orm"
+                 version="3.0">
+
+    <entity class="com.ecommerce.metier.Categorie">
+        <table name="categorie" schema="projet_jee" catalog=""/>
+        <attributes>
+            <id name="idcat">
+                <column name="idcat"/>
+            </id>
+            <basic name="libelle">
+                <column name="libelle"/>
+            </basic>
+            <basic name="description">
+                <column name="description"/>
+            </basic>
+            <one-to-many name="produitsByIdcat" mapped-by="categorieByIdcat"
+                         target-entity="com.ecommerce.metier.Produit"/>
+        </attributes>
+    </entity>
+</entity-mappings>
