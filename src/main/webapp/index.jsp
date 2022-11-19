@@ -77,7 +77,13 @@
                                         <h2>$<%=p.getPrix()%></h2>
                                         <p><%=p.getLibelle()%></p>
                                         <a href="view/detailProduit.jsp?idp=<%=p.getIdP()%>" class="btn btn-default add-to-cart"><i class="fa fa-plus-square"></i>Detail du produit</a>
+                                        <%
+                                           if(p.getQtestck()==0){
+                                        %>
+                                        <a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Produit epuisé !</a>
+                                        <%}else{%>
                                         <a href="GererPanier?action=ajouter&idp=<%=p.getIdP()%>&qte=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
+                                        <%}%>
                                     </div>
                                 </div>
 

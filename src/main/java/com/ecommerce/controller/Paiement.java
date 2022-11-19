@@ -13,9 +13,7 @@ import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
 
 @WebServlet(name = "Paiement", urlPatterns = {"/Paiement"})
 public class Paiement extends HttpServlet {
@@ -75,6 +73,7 @@ public class Paiement extends HttpServlet {
             throws ServletException, IOException {
 
         Session s = HibernateSession.getSession();
+        s.beginTransaction();
         long nocarte = Long.parseLong(request.getParameter("nocarte"));
         String datecarte = request.getParameter("datecarte");
         int crypto = Integer.parseInt(request.getParameter("crypto"));
@@ -119,24 +118,16 @@ public class Paiement extends HttpServlet {
                 cmd.getLignecommandesByIdcmd().add(lc);
                 s.save(lc);
                 i++;
-                /*Query q4 = s.createQuery("Select p.qtestck from Produit p where p.idP=:idPr");
-                q4.setParameter("idPr",lp.getProduit().getIdP());
-                int idmax4 = (int) q4.uniqueResult();
-                Query q3 = s.createQuery("UPDATE Produit p set p.qtestck=:deltaS WHERE p.idP =:idPr ");
-                int result = idmax4 - lp.getQte();
-                q3.setParameter("deltaS",result);
-                q3.setParameter("idPr",lp.getProduit().getIdP());
-                HibernateUtil.commitTransaction(s);*/
             }
 
-            s.beginTransaction();
             s.save(ad);
             s.save(cmd);
             s.getTransaction().commit();
+            s.close();
+            qteSF();
             request.getSession().removeAttribute("panier");
             request.setAttribute("msg", "Votre commande est paye avec succes et sera expedier prochainement!");
             request.getRequestDispatcher("/view/mescommandes.jsp").forward(request, response);
-            s.close();
         } else {
             request.setAttribute("msg", "Informations de paiement incorrectes!");
             request.getRequestDispatcher("/view/paiement.jsp").forward(request, response);
@@ -155,4 +146,47 @@ public class Paiement extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
+    public void qteSF (){
+        HibernateUtil.beginTransaction();
+        EntityManager em = HibernateUtil.beginTransaction();
+
+        Query q1= (Query) em.createQuery("select max(idcmd) from Commande");
+        int idcmd1 = (int) q1.uniqueResult();
+
+        Query q2= (Query) em.createQuery("select produitByIdp.id from Lignecommande l where l.commandeByIdcmd.idcmd=:idcmd");
+        q2.setParameter("idcmd",idcmd1);
+        List<Integer> l = q2.list();
+        //int id1 = (int) q3.uniqueResult();
+        System.out.println(l.get(0));
+
+        Map<Integer,Integer> l2 = new HashMap<>();
+        for (int i=0; i<l.size(); i++) {
+            Query q3= (Query) em.createQuery("select qte from Lignecommande where commandeByIdcmd.idcmd=:idcmd and produitByIdp.id=:idpro ");
+            q3.setParameter("idcmd",idcmd1);
+            q3.setParameter("idpro",l.get(i));
+            int qte1 = (int) q3.uniqueResult();
+            l2.put(l.get(i),qte1);
+        }
+        System.out.println("qte"+l2.get(0));
+
+        Map<Integer,Integer> l3 = new HashMap<>();
+        for (int i=0; i<l.size(); i++) {
+            Query q4= (Query) em.createQuery("select qtestck from Produit where idP=:idprod");
+            q4.setParameter("idprod",l.get(i));
+            int qteS = (int) q4.uniqueResult();
+            l3.put(l.get(i),qteS);
+        }
+        System.out.println("qte"+l3.get(0));
+        System.out.println("qte"+l2.get(0));
+        for(int i=0; i<l.size(); i++){
+            int result = l3.get(l.get(i))-l2.get(l.get(i));
+            Query q5= (Query) em.createQuery("update Produit set qtestck=:result1 where idP=:id1P");
+            q5.setParameter("id1P",l.get(i));
+            q5.setParameter("result1",result);
+            int r = q5.executeUpdate();
+        }
+        HibernateUtil.commitTransaction(em);
+        em.close();
+    }
 }
