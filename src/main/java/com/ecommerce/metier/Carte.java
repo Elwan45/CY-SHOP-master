@@ -12,6 +12,15 @@ public class Carte {
     private String numero;
     private String dateExpiration;
     private int crypto;
+    private Integer solde;
+
+    public Carte(int solde) {
+        this.solde = solde;
+    }
+
+    public Carte() {
+
+    }
 
     @Id
     @Column(name = "idcarte", nullable = false)
@@ -65,4 +74,13 @@ public class Carte {
     public int hashCode() {
         return Objects.hash(idcarte, numero, dateExpiration, crypto);
     }
+
+    public Integer getSolde() {
+        return solde;
+    }
+
+    public void setSolde(Integer prix) {
+        this.solde = prix;
+    }
+
 }

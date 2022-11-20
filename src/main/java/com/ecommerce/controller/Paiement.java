@@ -79,7 +79,7 @@ public class Paiement extends HttpServlet {
         int crypto = Integer.parseInt(request.getParameter("crypto"));
         //if(nocarte.equals("123456789")&&datecarte.equals("12/21")&&crypto.equals("123")){
         Panier p = (Panier) request.getSession().getAttribute("panier");
-        float mnt = 0;
+        Integer mnt = 0;
         for (LignePanier lp2 : p.getItems()) {
             mnt += lp2.getQte() * lp2.getProduit().getPrix();
         }
@@ -88,51 +88,58 @@ public class Paiement extends HttpServlet {
         q.setLong("nocarte", nocarte);
         q.setString("datecarte", datecarte);
         q.setInteger("crypto", crypto);
+
         List<Carte> l = q.list();
-        if (l.size() > 0) {
+        Integer a = solde();
+        System.out.println("quantite stock="+a);
 
-            String adresse1 = request.getParameter("adresse1");
-            String adresse2 = request.getParameter("adresse2");
-            String pays = request.getParameter("pays");
-            String ville = request.getParameter("ville");
-            int codepostale = Integer.parseInt(request.getParameter("codepostale"));
-            Client clt = (Client) request.getSession().getAttribute("clt");
-            clt = (Client) s.get(Client.class, clt.getIdc());
+        if(mnt<= a){
+            if (l.size() > 0) {
+                solde2(mnt,a);
+                String adresse1 = request.getParameter("adresse1");
+                String adresse2 = request.getParameter("adresse2");
+                String pays = request.getParameter("pays");
+                String ville = request.getParameter("ville");
+                int codepostale = Integer.parseInt(request.getParameter("codepostale"));
+                Client clt = (Client) request.getSession().getAttribute("clt");
+                clt = (Client) s.get(Client.class, clt.getIdc());
 
-            Query q0 = s.createQuery("select max(a.id) from Adresse a ");
-            int idmax = (int) q0.uniqueResult();
-            Query q1 = s.createQuery("select  max(c.idcmd) from Commande c");
-            int idmax1 = (int) q1.uniqueResult();
-            Query q2 = s.createQuery("select  max(l.idlc) from Lignecommande l");
-            int idmax2 = (int) q2.uniqueResult();
+                Query q0 = s.createQuery("select max(a.id) from Adresse a ");
+                int idmax = (int) q0.uniqueResult();
+                Query q1 = s.createQuery("select  max(c.idcmd) from Commande c");
+                int idmax1 = (int) q1.uniqueResult();
+                Query q2 = s.createQuery("select  max(l.idlc) from Lignecommande l");
+                int idmax2 = (int) q2.uniqueResult();
 
-            Adresse ad = new Adresse(idmax+1,clt, adresse1, ville, codepostale, pays, null);
-            Commande cmd = new Commande(idmax1+1, clt, ad, new Date(), "VISA", "en cours", new ArrayList<Lignecommande>(), null);
+                Adresse ad = new Adresse(idmax+1,clt, adresse1, ville, codepostale, pays, null);
+                Commande cmd = new Commande(idmax1+1, clt, ad, new Date(), "VISA", "en cours", new ArrayList<Lignecommande>(), null);
 
-            HibernateUtil.beginTransaction();
-            EntityManager em = HibernateUtil.beginTransaction();
-            int i=1;
+                HibernateUtil.beginTransaction();
+                EntityManager em = HibernateUtil.beginTransaction();
+                int i=1;
 
-            for (LignePanier lp : p.getItems()) {
-                Lignecommande lc = new Lignecommande(idmax2+i, lp.getProduit(), cmd, lp.getQte(), lp.getProduit().getPrix());
-                cmd.getLignecommandesByIdcmd().add(lc);
-                s.save(lc);
-                i++;
+                for (LignePanier lp : p.getItems()) {
+                    Lignecommande lc = new Lignecommande(idmax2+i, lp.getProduit(), cmd, lp.getQte(), lp.getProduit().getPrix());
+                    cmd.getLignecommandesByIdcmd().add(lc);
+                    s.save(lc);
+                    i++;
+                }
+
+                s.save(ad);
+                s.save(cmd);
+                s.getTransaction().commit();
+                s.close();
+                qteSF();
+                request.getSession().removeAttribute("panier");
+                request.setAttribute("msg", "Votre commande est paye avec succes et sera expedier prochainement!");
+                request.getRequestDispatcher("/view/mescommandes.jsp").forward(request, response);
+            } else {
+                request.setAttribute("msg", "Informations de paiement incorrectes!");
+                request.getRequestDispatcher("/view/paiement.jsp").forward(request, response);
             }
-
-            s.save(ad);
-            s.save(cmd);
-            s.getTransaction().commit();
-            s.close();
-            qteSF();
-            request.getSession().removeAttribute("panier");
-            request.setAttribute("msg", "Votre commande est paye avec succes et sera expedier prochainement!");
-            request.getRequestDispatcher("/view/mescommandes.jsp").forward(request, response);
-        } else {
-            request.setAttribute("msg", "Informations de paiement incorrectes!");
-            request.getRequestDispatcher("/view/paiement.jsp").forward(request, response);
-        }
-        //HibernateUtil.commitTransaction(em);
+        }else{
+            request.setAttribute("msg", "Votre solde est insuffisant!");
+            request.getRequestDispatcher("/view/paiement.jsp").forward(request, response);}
     }
 
 
@@ -189,4 +196,25 @@ public class Paiement extends HttpServlet {
         HibernateUtil.commitTransaction(em);
         em.close();
     }
+
+    public Integer solde(){
+        Session s = HibernateSession.getSession();
+        s.beginTransaction();
+        Query q7 = s.createQuery("Select solde from Carte");
+        Integer solde = (Integer) q7.uniqueResult();
+        HibernateUtil.commitTransaction(s);
+        s.close();
+        return solde;
+    }
+    public void solde2(Integer mnt, Integer a){
+        Session s = HibernateSession.getSession();
+        s.beginTransaction();
+        Query q8 = s.createQuery("update Carte set solde=:solde1");
+        Integer solde2 = a - mnt;
+        q8.setParameter("solde1",solde2);
+        int result = q8.executeUpdate();
+        System.out.println("Ca marche ?"+result);
+        s.close();
+    }
+
 }
