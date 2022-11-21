@@ -10,7 +10,6 @@
         <mapping-file>Lignecommande.xml</mapping-file>
         <mapping-file>Produit.xml</mapping-file>
         <mapping-file>Carte.xml</mapping-file>
-        <mapping-file>Bloque.xml</mapping-file>
         <class>com.ecommerce.metier.Adresse</class>
         <class>com.ecommerce.metier.Categorie</class>
         <class>com.ecommerce.metier.Client</class>
@@ -22,7 +21,6 @@
         <class>com.ecommerce.metier.Produit</class>
 
         <class>com.ecommerce.metier.Carte</class>
-        <class>com.ecommerce.metier.Bloque</class>
         <properties>
             <property name="hibernate.connection.url" value="jdbc:mysql://localhost:3306/projet_jee"/>
             <property name="hibernate.connection.driver_class" value="com.mysql.jdbc.Driver"/>

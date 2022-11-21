@@ -24,7 +24,7 @@
             <td class="image">Produit</td>
             <td class="description">Libelle</td>
             <td class="price">Prix</td>
-
+            <td class="price">Qte stock</td>
             <td></td>
         </tr>
         </thead>
@@ -36,16 +36,19 @@
         %>
         <tr>
             <td class="cart_product">
+                <a href=""><img src="${pageContext.request.contextPath}/images/produit/<%=p.getImagesByIdP().get(0).getUrl()%>" width="50px" height="50px" alt=""></a>
             </td>
             <td class="cart_description">
                 <h4><a href=""><%=p.getLibelle()%></a></h4>
-
             </td>
             <td class="cart_price">
                 <p>$<%=p.getPrix()%></p>
             </td>
+            <td class="cart_price">
+                <p><%=p.getQtestck()%></p>
+            </td>
         </tr>
-        <%s.close();}%>
+        <%}%>
         </tbody>
     </table>
 </div>

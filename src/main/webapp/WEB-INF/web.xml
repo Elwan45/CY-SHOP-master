@@ -12,15 +12,6 @@
         <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
     </servlet-mapping>
     <servlet>
-        <servlet-name>Checkout</servlet-name>
-        <servlet-class>com.ecommerce.controller.Checkout</servlet-class>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>Checkout</servlet-name>
-        <url-pattern>/Checkout</url-pattern>
-        <!-- C'est ici qu'il faut écrire l'URL de votre servlet.  -->
-    </servlet-mapping>
-    <servlet>
         <servlet-name>GererPanier</servlet-name>
         <servlet-class>com.ecommerce.controller.GererPanier</servlet-class>
     </servlet>
