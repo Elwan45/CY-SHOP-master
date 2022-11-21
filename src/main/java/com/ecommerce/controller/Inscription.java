@@ -84,7 +84,7 @@ public class Inscription extends HttpServlet {
         int idmax = (int) q.uniqueResult();
 
         Compte cpt=new Compte(email, mdp, "client", null, null, null, null);
-        Client clt=new Client(idmax+1, cpt , null, prenom, email, null,null,new Date(), null, null);
+        Client clt=new Client(idmax+1, cpt , "null", prenom, email, null,null,new Date(), null, null);
 
         em.persist(cpt);
         em.persist(clt);

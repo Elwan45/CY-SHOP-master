@@ -77,7 +77,6 @@ public class Paiement extends HttpServlet {
         long nocarte = Long.parseLong(request.getParameter("nocarte"));
         String datecarte = request.getParameter("datecarte");
         int crypto = Integer.parseInt(request.getParameter("crypto"));
-        //if(nocarte.equals("123456789")&&datecarte.equals("12/21")&&crypto.equals("123")){
         Panier p = (Panier) request.getSession().getAttribute("panier");
         Integer mnt = 0;
         for (LignePanier lp2 : p.getItems()) {

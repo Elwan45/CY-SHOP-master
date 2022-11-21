@@ -36,7 +36,6 @@
         %>
         <tr>
             <td class="cart_product">
-                <a href=""><img src="${pageContext.request.contextPath}/images/produit/<%=p.getImagesByIdP().get(0).getUrl()%>" width="50px" height="50px" alt=""></a>
             </td>
             <td class="cart_description">
                 <h4><a href=""><%=p.getLibelle()%></a></h4>
