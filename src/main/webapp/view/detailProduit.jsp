@@ -4,7 +4,7 @@
 <%@ page import="com.ecommerce.dao.HibernateUtil" %>
 <%@ page import="javax.persistence.EntityManager" %>
 <%@ page import="com.ecommerce.metier.*" %>
-<%@ page import="org.hibernate.query.Query" %>
+<%@ page import="org.hibernate.query.Query"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -101,26 +101,17 @@
                     </div>
                     <div class="col-sm-7">
                         <div class="product-information"><!--/product-information-->
-                            <form action="${pageContext.request.contextPath}/GererPanier" method="get">
-                                <h2><%=p.getLibelle()%></h2>
-                                <p><%=p.getCategorieByIdcat().getLibelle()%></p>
-                                <img src="images/product-details/rating.png" alt="" />
-                                <span>
-									<span>US $<%=p.getPrix()%></span>
-									<label>Quantite :</label>
-									<input type="text" name="qte" value="3" />
-
-                                                                        <button type="submit" class="btn btn-fefault cart">
-										<i class="fa fa-shopping-cart"></i>
-										Ajouter au panier
-									</button>
-								</span>
-                                <input type="hidden" name="idp" value="<%=p.getIdP()%>">
-                                <input type="hidden" name="action" value="ajouter">
-                            </form>
-                            <p><b>Quantite en stock</b> <%=p.getQtestck()%></p>
+                            <%
+                                if(p.getQtestck()==0){
+                            %>
+                            <a class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Produit epuise !</a>
+                            <%}else{%>
+                            <a href="${pageContext.request.contextPath}/GererPanier?action=ajouter&idp=<%=p.getIdP()%>&qte=1" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</a>
+                            <%}%>
+                        </div>
+                            <p><b>Quantite en stock:</b> <%=p.getQtestck()%></p>
                             <p><b>Condition:</b> Nouveau</p>
-                            <p><b>Marque</b> <%=p.getMarque()%></p>
+                            <p><b>Marque:</b> <%=p.getMarque()%></p>
                             <a href=""><img src="images/product-details/share.png" class="share img-responsive"  alt="" /></a>
                         </div><!--/product-information-->
                     </div>
@@ -155,80 +146,6 @@
 
                 </div>
             </div><!--/category-tab-->
-
-            <div class="recommended_items"><!--recommended_items-->
-                <h2 class="title text-center">Article recommandé</h2>
-
-                <div id="recommended-item-carousel" class="carousel slide" data-ride="carousel">
-                    <div class="carousel-inner">
-                        <%
-
-                            List<Produit> lp=p.getCategorieByIdcat().getProduitsByIdcat();
-                            for(int j=0;j<lp.size();j=j+3){
-
-                                Produit pr1=lp.get(j);
-                                Produit pr2=null;
-
-                                Produit pr3=null;
-                                try{
-                                    pr2=lp.get(j+1);
-                                    pr3=lp.get(j+2);
-                                }catch(Exception e){}
-
-                        %>
-                        <div class="item <%=(j==0)? "active":""%>">
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="${pageContext.request.contextPath}/images/produit/<%=pr1.getImagesByIdP().get(0).getUrl()%>" alt="" />
-                                            <h2>$<%=pr1.getPrix()%></h2>
-                                            <p><%=pr1.getLibelle()%></p>
-                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <% if(pr2!=null) {%>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="${pageContext.request.contextPath}/images/produit/<%=pr2.getImagesByIdP().get(0).getUrl()%>" alt="" />
-                                            <h2>$<%=pr2.getPrix()%></h2>
-                                            <p><%=pr2.getLibelle()%></p>
-                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%}%>
-                            <% if(pr3!=null) {%>
-                            <div class="col-sm-4">
-                                <div class="product-image-wrapper">
-                                    <div class="single-products">
-                                        <div class="productinfo text-center">
-                                            <img src="${pageContext.request.contextPath}/images/produit/<%=pr3.getImagesByIdP().get(0).getUrl()%>" alt="" />
-                                            <h2>$<%=pr3.getPrix()%></h2>
-                                            <p><%=pr3.getLibelle()%></p>
-                                            <button type="button" class="btn btn-default add-to-cart"><i class="fa fa-shopping-cart"></i>Ajouter au panier</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <%}%>
-
-                        </div>
-                        <%}%>
-                    </div>
-                    <a class="left recommended-item-control" href="#recommended-item-carousel" data-slide="prev">
-                        <i class="fa fa-angle-left"></i>
-                    </a>
-                    <a class="right recommended-item-control" href="#recommended-item-carousel" data-slide="next">
-                        <i class="fa fa-angle-right"></i>
-                    </a>
-                </div>
-            </div><!--/recommended_items-->
 
         </div>
     </div>
